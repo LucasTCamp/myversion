@@ -3,7 +3,7 @@ name: Run Tests
 on:
   # PIPELINE BUG 1: 'pushh' is a typo -- not a valid GitHub Actions event.
   # The workflow will never trigger on push.
-  pushh:
+  push:
     branches: [main]
 
 jobs:
@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
       # PIPELINE BUG 2: Missing actions/checkout step entirely.
       # The runner has no code to work with -- all subsequent steps will fail
       # because the repo files do not exist in the working directory.
@@ -18,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: "3.14"
 
       - name: Install dependencies
         run: pip install pytest pytest-cov
